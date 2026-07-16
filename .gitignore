@@ -1,3 +1,4 @@
 *.bmp
-\xsim.dir\
+*dir/
 xvlog.pb
+dfx_runtime.txt

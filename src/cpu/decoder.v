@@ -65,7 +65,12 @@ module bus_if (
     wire signed [`WordDataBus]  s_ra_data = $signed(ra_data);
     reg [`WordDataBus]          rb_data;
     wire signed [`WordDataBus]  s_rb_data = $signed(rb_data);
-    // Addresses
+    /*
+    * The address used in the instruction decoder is generated here. Due to the delay
+    * slot, the return address of the CALL instruction is the address two instructions
+    * after. Since the PC(if_pc) already hold the address of the next instruction, the
+    * return address(ret_addr) is the address in the PC plus 1.
+    */
     wire [`WordAddrBus] ret_addr = if_pc + 1'b1; // Return Address
     wire [`WordAddrBus] br_target = if_pc + imm_s[`WORD_ADDR_MSB:0]; // Branch Target
     wire [`WordAddrBus] jr_target = ra_data[`WordAddrLoc]; // Jump Target
@@ -98,4 +103,109 @@ module bus_if (
         end
     end
 
+    // Load Hazard Detection
+    always @(*) begin
+        /*
+        * The condition of a load hazard to occur is: the previous instruction stored 
+        * in the ID/EX pipeline register is a Load instruction, and the write address
+        * of the GPR is equel to the read address of the current instruction.
+        */
+        if (
+            (id_en == `ENABLE) &&
+            (id_mem_op == `MEM_OP_LDW) &&
+            ((id_dst_addr == ra_addr) || (id_dst_addr == rb_addr))
+        ) begin
+            ld_hazard = `ENABLE;
+        end else begin
+            ld_hazard = `DISABLE;
+        end
+    end
+
+    // Instruction Decoding
+    always @(*) begin
+        alu_op      = `ALU_OP_NOP;
+        alu_in_0    = ra_data;
+        alu_in_1    = rb_data;
+        br_taken    = `DISABLE;
+        br_flag     = `DISABLE;
+        br_addr     = {`WORD_ADDR_W{1'b0}};
+        mem_op      = `MEM_OP_NOP;
+        ctrl_op     = `CTRL_OP_NOP;
+        dst_addr    = rb_addr;
+        gpr_we_     = `DISABLE;
+        exp_code    = `ISA_EXP_NO_EXP;
+        if (if_en == `ENABLE) begin
+            case (op)
+                // Logical Operation Instructions
+                `ISA_OP_ANDR : begin
+                    alu_op      = `ALU_OP_AND;
+                    dst_addr    = rc_addr;
+                    gpr_we_     = `ENABLE_;
+                end
+                `ISA_OP_ANDI : begin
+                    alu_op      = `ALU_OP_AND;
+                    alu_in_1    = imm_u;
+                    gpr_we_     = `ENABLE_;
+                end
+                `ISA_OP_ORR : begin
+                    alu_op      = `ALU_OP_OR;
+                    dst_addr    = rc_addr;
+                    gpr_we_     = `ENABLE_;
+                end
+                `ISA_OP_ORI : begin
+                    alu_op      = `ALU_OP_OR;
+                    alu_in_1    = imm_u;
+                    gpr_we_     = `ENABLE_;
+                end
+                `ISA_OP_XORR : begin
+                    alu_op      = `ALU_OP_XOR;
+                    dst_addr    = rc_addr;
+                    gpr_we_     = `ENABLE_;
+                end
+                `ISA_OP_XORI : begin
+                    alu_op      = `ALU_OP_XOR;
+                    alu_in_1    = imm_u;
+                    gpr_we_     = `ENABLE_;
+                end
+                // Arithmetic Operation Instructions
+                `ISA_OP_ADDSR : begin
+                    alu_op      = `ALU_OP_ADDS;
+                    dst_addr    = rc_addr;
+                    gpr_we_     = `ENABLE_;
+                end
+                `ISA_OP_ADDSI : begin
+                    alu_op      = `ALU_OP_ADDS;
+                    alu_in_1    = imm_u;
+                    gpr_we_     = `ENABLE_;
+                end
+                `ISA_OP_ADDUR : begin
+                    alu_op      = `ALU_OP_ADDU;
+                    dst_addr    = rc_addr;
+                    gpr_we_     = `ENABLE_;
+                end
+                `ISA_OP_ADDUI : begin
+                    alu_op      = `ALU_OP_ADDU;
+                    alu_in_1    = imm_u;
+                    gpr_we_     = `ENABLE_;
+                end
+                `ISA_OP_SUBSR : begin
+                    alu_op      = `ALU_OP_SUBS;
+                    dst_addr    = rc_addr;
+                    gpr_we_     = `ENABLE_;
+                end
+                `ISA_OP_SUBUR : begin
+                    alu_op      = `ALU_OP_SUBU;
+                    dst_addr    = rc_addr;
+                    gpr_we_     = `ENABLE_;
+                end
+                // Shift Instructions
+                
+                // Branch Instructions
+                // Memory Access Instructions
+                // System Call Instructions
+                // Privileged Instructions
+                // Other Instructions
+            endcase
+        end
+    end
 endmodule
