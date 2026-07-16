@@ -1,2 +1,3 @@
 *.bmp
-xsim.dir\
+\xsim.dir\
+xvlog.pb
