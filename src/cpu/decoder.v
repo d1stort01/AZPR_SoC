@@ -70,4 +70,32 @@ module bus_if (
     wire [`WordAddrBus] br_target = if_pc + imm_s[`WORD_ADDR_MSB:0]; // Branch Target
     wire [`WordAddrBus] jr_target = ra_data[`WordAddrLoc]; // Jump Target
 
+    // Data Forwarding
+    always @(*) begin
+        // Ra Register
+        if ((id_en == `ENABLE) && 
+            (id_gpr_we_ == `ENABLE_) && 
+            (id_dst_addr == ra_addr)) begin
+            ra_data = ex_fwd_data;
+        end else if ((ex_en == `ENABLE) && 
+            (ex_gpr_we_ == `ENABLE_) && 
+            (ex_dst_addr == ra_addr)) begin
+            ra_data = mem_fwd_data;
+        end else begin
+            ra_data = gpr_rd_data_0;
+        end
+        // Rb Register
+        if ((id_en == `ENABLE) && 
+            (id_gpr_we_ == `ENABLE_) && 
+            (id_dst_addr == rb_addr)) begin
+            rb_data = ex_fwd_data;
+        end else if ((ex_en == `ENABLE) && 
+            (ex_gpr_we_ == `ENABLE_) && 
+            (ex_dst_addr == rb_addr)) begin
+            rb_data = mem_fwd_data;
+        end else begin
+            rb_data = gpr_rd_data_0;
+        end
+    end
+
 endmodule
