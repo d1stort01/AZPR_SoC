@@ -1,0 +1,34 @@
+`ifndef __STDDEF_HEADER__
+    `define __STDDEF_HEADER__
+
+    // Signal Level
+    `define HIGH 1'b1
+    `define LOW 1'b0
+    // Positive Logic
+    `define ENABLE 1'b1
+    `define DISABLE 1'b0
+    // Negative Logic
+    `define ENABLE_ 1'b0
+    `define DISABLE_ 1'b1
+    // R/W Control Signals
+    `define READ 1'b1
+    `define WRITE 1'b0
+    // Word
+    `define WORD_DATA_W 32
+    `define WORD_MSB 31
+    `define WordDataBus 31:0
+    `define WORD_ADDR_W 30
+    `define WORD_ADDR_MSB 29
+    `define WordAddrBus 29:0
+    `define WordAddrLoc 31:2
+    // Byte
+    `define BYTE_DATA_W 8
+    `define BYTE_MSB 7
+    `define ByteDataBus 7:0
+    `define BYTE_OFFSET_W 2
+    `define ByteOffsetBus 1:0
+    `define ByteOffsetLoc 1:0
+    `define BYTE_OFFSET_WORD 2'b00
+
+    `define LSB 0
+`endif
