@@ -59,5 +59,5 @@
     `define ISA_EXP_OVERFLOW 3'h3
     `define ISA_EXP_MISS_ALIGN 3'h4
     `define ISA_EXP_TRAP 3'h5
-    `define ISA_EXP_PRV_VIO 3'h6
+    `define ISA_EXP_PRV_VIO 3'h6 // Privilege Violation
 `endif
