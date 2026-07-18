@@ -6,7 +6,7 @@
 `include "../../include/stddef.h"
 `include "../../include/global_config.h"
 
-module bus_if (
+module decoder (
     // IF/ID Pipeline Registers
     input wire [`WordAddrBus]   if_pc,
     input wire [`WordDataBus]   if_insn,
