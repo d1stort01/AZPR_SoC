@@ -69,7 +69,7 @@ module id_reg (
                     id_dst_addr     <= #1 `REG_ADDR_W'd0;
                     id_gpr_we_      <= #1 `DISABLE_;
                     id_exp_code     <= #1 `ISA_EXP_NO_EXP;
-                end else begin                           // Next data
+                end else begin                          // Next data
                     id_pc           <= #1 if_pc;
                     id_en           <= #1 if_en;
                     id_alu_op       <= #1 alu_op;

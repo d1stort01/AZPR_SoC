@@ -36,7 +36,7 @@ module if_reg (
                     if_pc   <= #1 br_addr;
                     if_insn <= #1 insn;
                     if_en   <= #1 `ENABLE;
-                end else begin                           // Next address
+                end else begin                          // Next address
                     if_pc   <= #1 if_pc + 1'd1;
                     if_insn <= #1 insn;
                     if_en   <= #1 `ENABLE;
