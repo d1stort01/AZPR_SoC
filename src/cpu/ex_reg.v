@@ -7,6 +7,7 @@
 `include "../../include/global_config.h"
 
 module ex_reg (
+    // Clock & Reset
     input wire                  clk,
     input wire                  reset,
     // ALU Output

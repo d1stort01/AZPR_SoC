@@ -6,6 +6,7 @@
 `include "../../include/global_config.h"
 
 module bus_if (
+    // Clock & Reset
     input wire                  clk,
     input wire                  reset,
     // Pipeline Control Signals

@@ -7,6 +7,7 @@
 `include "../../include/global_config.h"
 
 module if_reg (
+    // Clock & Reset
     input wire                  clk,
     input wire                  reset,
     input wire [`WordDataBus]   insn,

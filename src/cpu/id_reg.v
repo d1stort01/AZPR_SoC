@@ -7,6 +7,7 @@
 `include "../../include/global_config.h"
 
 module id_reg (
+    // Clock & Reset
     input wire                  clk,
     input wire                  reset,
     // Decoding Results

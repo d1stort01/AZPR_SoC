@@ -2,3 +2,4 @@
 *dir/
 xvlog.pb
 dfx_runtime.txt
+src/cpu/ctrl.v
