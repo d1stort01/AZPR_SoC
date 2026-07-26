@@ -1,9 +1,9 @@
 `timescale 1ns/1ps
 
-`include "../../include/cpu.h"
-`include "../../include/spm.h"
-`include "../../include/stddef.h"
-`include "../../include/global_config.h"
+`include "cpu.h"
+`include "spm.h"
+`include "stddef.h"
+`include "global_config.h"
 
 module spm (
     input wire                  clk,

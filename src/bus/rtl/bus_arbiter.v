@@ -1,8 +1,8 @@
 `timescale 1ns/1ps
 
-`include "../../include/bus.h"
-`include "../../include/stddef.h"
-`include "../../include/global_config.h"
+`include "bus.h"
+`include "stddef.h"
+`include "global_config.h"
 
 module bus_arbiter (
     // System Clock

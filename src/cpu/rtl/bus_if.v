@@ -1,9 +1,9 @@
 `timescale 1ns/1ps
 
-`include "../../include/cpu.h"
-`include "../../include/bus.h"
-`include "../../include/stddef.h"
-`include "../../include/global_config.h"
+`include "cpu.h"
+`include "bus.h"
+`include "stddef.h"
+`include "global_config.h"
 
 module bus_if (
     // Clock & Reset

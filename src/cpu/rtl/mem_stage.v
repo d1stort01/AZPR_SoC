@@ -1,8 +1,8 @@
 `timescale 1ns/1ps
 
-`include "../../include/stddef.h"
-`include "../../include/cpu.h"
-`include "../../include/isa.h"
+`include "stddef.h"
+`include "cpu.h"
+`include "isa.h"
 
 module mem_stage (
     // Clock & Reset

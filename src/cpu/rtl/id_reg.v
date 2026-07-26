@@ -1,10 +1,10 @@
 `timescale 1ns/1ps
 
-`include "../../include/cpu.h"
-`include "../../include/isa.h"
-`include "../../include/bus.h"
-`include "../../include/stddef.h"
-`include "../../include/global_config.h"
+`include "cpu.h"
+`include "isa.h"
+`include "bus.h"
+`include "stddef.h"
+`include "global_config.h"
 
 module id_reg (
     // Clock & Reset

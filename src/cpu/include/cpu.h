@@ -29,8 +29,8 @@
     `define CTRL_OP_W 2
     `define CtrlOpBus 1:0
     `define CTRL_OP_NOP 2'h0
-    `define CTRL_OP_WRCR 2'h1
-    `define CTRL_OP_EXRT 2'h2
+    `define CTRL_OP_WRCR 2'h1 // Write Control Register
+    `define CTRL_OP_EXRT 2'h2 // Exception Return
     // Execution
     `define CPU_EXE_MODE_W 1
     `define CpuExeModeBus 0:0

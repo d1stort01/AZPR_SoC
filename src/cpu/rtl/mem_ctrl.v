@@ -1,8 +1,8 @@
 `timescale 1ns/1ps
 
-`include "../../include/cpu.h"
-`include "../../include/stddef.h"
-`include "../../include/global_config.h"
+`include "cpu.h"
+`include "stddef.h"
+`include "global_config.h"
 
 module mem_ctrl (
     // EM/MEM Pipeline Registers

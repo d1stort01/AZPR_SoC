@@ -1,8 +1,8 @@
 `timescale 1ns/1ps
 
-`include "../../include/rom.h"
-`include "../../include/stddef.h"
-`include "../../include/global_config.h"
+`include "rom.h"
+`include "stddef.h"
+`include "global_config.h"
 
 module rom (
     input wire                  clk,

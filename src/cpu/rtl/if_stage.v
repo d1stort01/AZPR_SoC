@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-`include "../../include/stddef.h"
+`include "stddef.h"
 
 module if_stage (
     // Clock & Reset
