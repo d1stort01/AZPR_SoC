@@ -6,19 +6,19 @@
 `include "global_config.h"
 
 module ctrl (
-    // Clock & Reset
+    /*Clock & Reset*/
     input wire                   clk,
     input wire                   reset,
-    // Control Register Interfac
+    /*Control Register Interfac*/
     input wire [`RegAddrBus]     creg_rd_addr,
     output reg [`WordDataBus]    creg_rd_data,
     output reg                   exe_mode,
-    // Interrupt
+    /*Interrupt*/
     input wire [`CPU_IRQ_CH-1:0] irq,
     output reg                   int_detect,
-    // ID/EX Pipeline Register
+    /*ID/EX Pipeline Register*/
     input wire [`WordAddrBus]    id_pc,
-    // MEM/WB Pipeline Register
+    /*MEM/WB Pipeline Register*/
     input wire [`WordAddrBus]    mem_pc,
     input wire                   mem_en,
     input wire                   mem_br_flag,
@@ -27,25 +27,25 @@ module ctrl (
     input wire                   mem_gpr_we_,
     input wire [`CpuExeModeBus]  mem_exp_code,
     input wire [`WordDataBus]    mem_out,
-    // Pipeline Status
+    /*Pipeline Status*/
     input wire                   if_busy,
     input wire                   ld_hazard,
     input wire                   mem_busy,
-    // Stall Signal
+    /*Stall Signal*/
     output wire                  if_stall,
     output wire                  id_stall,
     output wire                  ex_stall,
     output wire                  mem_stall,
-    // Flush Signal
+    /*Flush Signal*/
     output wire                  if_flush,
     output wire                  id_flush,
     output wire                  ex_flush,
     output wire                  mem_flush,
     output reg [`WordAddrBus]    new_pc
 );
-    //
-    // Control Registers
-    //
+    /*
+    * Control Registers
+    */
     reg                   int_en;
     reg                   pre_exe_mode;
     reg                   pre_int_en;
@@ -58,27 +58,27 @@ module ctrl (
     reg [`WordAddrBus]    pre_pc;
     reg                   br_flag;
 
-    //
-    // Stall Signals
-    //
+    /*
+    * Stall Signals
+    */
     wire stall       = if_busy | mem_busy;
     assign if_stall  = stall;
     assign id_stall  = stall;
     assign ex_stall  = stall;
     assign mem_stall = stall;
 
-    //
-    // Flush Signals
-    //
+    /*
+    * Flush Signals
+    */
     reg flush;
     assign if_flush  = flush;
     assign id_flush  = flush | ld_hazard;
     assign ex_flush  = flush;
     assign mem_flush = flush;
 
-    //
-    // Pipeline Flush Control
-    //
+    /*
+    * Pipeline Flush Control
+    */
     always @(*) begin
         new_pc  = `WORD_ADDR_W'h0;
         flush   = `DISABLE;

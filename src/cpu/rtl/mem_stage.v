@@ -5,58 +5,58 @@
 `include "isa.h"
 
 module mem_stage (
-    // Clock & Reset
-    input wire                  clk,
-    input wire                  reset,
-    // Bus Busy Signal
-    output wire                 busy,
-    // Pipeline Control Signals
-    input wire                  stall,
-    input wire                  flush,
-    // Forwarding
-    output wire [`WordDataBus]  fwd_data,
-    // EX/MEM Pipeline Registers
-    input wire [`WordAddrBus]   ex_pc,
-    input wire                  ex_en,
-    input wire                  ex_br_flag,
-    input wire [`MemOpBus]      ex_mem_op,
-    input wire [`WordDataBus]   ex_mem_wr_data,
-    input wire [`CtrlOpBus]     ex_ctrl_op,
-    input wire [`RegAddrBus]    ex_dst_addr,
-    input wire                  ex_gpr_we_,
-    input wire [`IsaExpBus]     ex_exp_code,
-    input wire [`WordDataBus]   ex_out,
-    // MEM/WB Pipeline Registers
-    output wire [`WordAddrBus]  mem_pc,
-    output wire                 mem_en,
-    output wire                 mem_br_flag,
-    output wire [`CtrlOpBus]    mem_ctrl_op,
-    output wire [`RegAddrBus]   mem_dst_addr,
-    output wire                 mem_gpr_we_,
-    output wire [`IsaExpBus]    mem_exp_code,
-    output wire [`WordDataBus]  mem_out,
-    // SPM Interface
-    input wire [`WordDataBus]   spm_rd_data,
-    output wire [`WordAddrBus]  spm_addr,
-    output wire                 spm_as_,
-    output wire                 spm_rw,
-    output wire [`WordDataBus]  spm_wr_data,
-    // Bus Interface
-    input wire [`WordDataBus]   bus_rd_data,
-    input wire                  bus_rdy_,
-    input wire                  bus_grnt_,
-    output wire                 bus_req_,
-    output wire [`WordAddrBus]  bus_addr,
-    output wire                 bus_as_,
-    output wire                 bus_rw,
-    output wire [`WordDataBus]  bus_wr_data
+    /*Clock & Reset*/
+    input wire                 clk,
+    input wire                 reset,
+    /*Bus Busy Signal*/
+    output wire                busy,
+    /*Pipeline Control Signals*/
+    input wire                 stall,
+    input wire                 flush,
+    /*Forwarding*/
+    output wire [`WordDataBus] fwd_data,
+    /*EX/MEM Pipeline Registers*/
+    input wire [`WordAddrBus]  ex_pc,
+    input wire                 ex_en,
+    input wire                 ex_br_flag,
+    input wire [`MemOpBus]     ex_mem_op,
+    input wire [`WordDataBus]  ex_mem_wr_data,
+    input wire [`CtrlOpBus]    ex_ctrl_op,
+    input wire [`RegAddrBus]   ex_dst_addr,
+    input wire                 ex_gpr_we_,
+    input wire [`IsaExpBus]    ex_exp_code,
+    input wire [`WordDataBus]  ex_out,
+    /*MEM/WB Pipeline Registers*/
+    output wire [`WordAddrBus] mem_pc,
+    output wire                mem_en,
+    output wire                mem_br_flag,
+    output wire [`CtrlOpBus]   mem_ctrl_op,
+    output wire [`RegAddrBus]  mem_dst_addr,
+    output wire                mem_gpr_we_,
+    output wire [`IsaExpBus]   mem_exp_code,
+    output wire [`WordDataBus] mem_out,
+    /*SPM Interface*/
+    input wire [`WordDataBus]  spm_rd_data,
+    output wire [`WordAddrBus] spm_addr,
+    output wire                spm_as_,
+    output wire                spm_rw,
+    output wire [`WordDataBus] spm_wr_data,
+    /*Bus Interface*/
+    input wire [`WordDataBus]  bus_rd_data,
+    input wire                 bus_rdy_,
+    input wire                 bus_grnt_,
+    output wire                bus_req_,
+    output wire [`WordAddrBus] bus_addr,
+    output wire                bus_as_,
+    output wire                bus_rw,
+    output wire [`WordDataBus] bus_wr_data
 );
-    wire [`WordAddrBus] addr;
-    wire                as_;
-    wire                rw;
-    wire [`WordDataBus] wr_data;
-    wire [`WordDataBus] rd_data;
-    wire [`WordDataBus] out;
+    wire [`WordAddrBus]        addr;
+    wire                       as_;
+    wire                       rw;
+    wire [`WordDataBus]        wr_data;
+    wire [`WordDataBus]        rd_data;
+    wire [`WordDataBus]        out;
 
     assign fwd_data = out;
 

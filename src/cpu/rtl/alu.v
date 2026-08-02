@@ -5,17 +5,17 @@
 `include "global_config.h"
 
 module alu (
-    // Input
-    input wire [`WordDataBus]   in_0,
-    input wire [`WordDataBus]   in_1,
-    input wire [`AluOpBus]      op,
-    // Results
-    output reg [`WordDataBus]   out,
-    output reg                  of
+    /*Input*/
+    input wire [`WordDataBus] in_0,
+    input wire [`WordDataBus] in_1,
+    input wire [`AluOpBus]    op,
+    /*Results*/
+    output reg [`WordDataBus] out,
+    output reg                of
 );
-    wire signed [`WordDataBus]  s_in_0  = $signed(in_0);
-    wire signed [`WordDataBus]  s_in_1  = $signed(in_1);
-    wire signed [`WordDataBus]  s_out   = $signed(out);
+    wire signed [`WordDataBus] s_in_0 = $signed(in_0);
+    wire signed [`WordDataBus] s_in_1 = $signed(in_1);
+    wire signed [`WordDataBus] s_out  = $signed(out);
     
     always @(*) begin
         case (op)
@@ -52,7 +52,9 @@ module alu (
         endcase
     end
 
-    // Overflow Detection
+    /*
+    * Overflow Detection
+    */
     always @(*) begin
         case (op)
             `ALU_OP_ADDS : begin

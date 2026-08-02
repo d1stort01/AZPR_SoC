@@ -6,21 +6,25 @@
 
 module bus_addr_dec (
     input wire [`WordAddrBus] s_addr,
-    output reg s0_cs_,
-    output reg s1_cs_,
-    output reg s2_cs_,
-    output reg s3_cs_,
-    output reg s4_cs_,
-    output reg s5_cs_,
-    output reg s6_cs_,
-    output reg s7_cs_
+    output reg                s0_cs_,
+    output reg                s1_cs_,
+    output reg                s2_cs_,
+    output reg                s3_cs_,
+    output reg                s4_cs_,
+    output reg                s5_cs_,
+    output reg                s6_cs_,
+    output reg                s7_cs_
 );
-    // Slave Index Extraction
+    /*
+    * Slave Index Extraction
+    */
     wire [`BusSlaveIndexBus] s_index = s_addr[`BusSlaveIndexLoc];
 
-    // Slave Chip-Select Decoder
+    /*
+    * Slave Chip-Select Decoder
+    */
     always @(*) begin
-        // Deassert all chip-select signals
+        /*Deassert all chip-select signals*/
         s0_cs_ = `DISABLE_;
         s1_cs_ = `DISABLE_;
         s2_cs_ = `DISABLE_;
@@ -29,7 +33,7 @@ module bus_addr_dec (
         s5_cs_ = `DISABLE_;
         s6_cs_ = `DISABLE_;
         s7_cs_ = `DISABLE_;
-        // Assert ship-select for the addressed slave
+        /*Assert ship-select for the addressed slave*/
         case (s_index)
             `BUS_SLAVE_0: begin
                 s0_cs_ = `ENABLE_;

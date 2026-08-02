@@ -7,37 +7,37 @@
 `include "global_config.h"
 
 module ex_reg (
-    // Clock & Reset
-    input wire                  clk,
-    input wire                  reset,
-    // ALU Output
-    input wire [`WordDataBus]   alu_out,
-    input wire                  alu_of,
-    // Pipeline Control Signals
-    input wire                  stall,
-    input wire                  flush,
-    input wire                  int_detect,
-    // ID/EX Pipeline Registers
-    input wire [`WordAddrBus]   id_pc,
-    input wire                  id_en,
-    input wire                  id_br_flag,
-    input wire [`MemOpBus]      id_mem_op,
-    input wire [`WordDataBus]   id_mem_wr_data,
-    input wire [`CtrlOpBus]     id_ctrl_op,
-    input wire [`RegAddrBus]    id_dst_addr,
-    input wire                  id_gpr_we_,
-    input wire [`IsaExpBus]     id_exp_code,
-    // EX/MEM Pipeline Registers
-    output reg [`WordAddrBus]   ex_pc,
-    output reg                  ex_en,
-    output reg                  ex_br_flag,
-    output reg [`MemOpBus]      ex_mem_op,
-    output reg [`WordDataBus]   ex_mem_wr_data,
-    output reg [`CtrlOpBus]     ex_ctrl_op,
-    output reg [`RegAddrBus]    ex_dst_addr,
-    output reg                  ex_gpr_we_,
-    output reg [`IsaExpBus]     ex_exp_code,
-    output reg [`WordDataBus]   ex_out
+    /*Clock & Reset*/
+    input wire                clk,
+    input wire                reset,
+    /*ALU Output*/
+    input wire [`WordDataBus] alu_out,
+    input wire                alu_of,
+    /*Pipeline Control Signals*/
+    input wire                stall,
+    input wire                flush,
+    input wire                int_detect,
+    /*ID/EX Pipeline Registers*/
+    input wire [`WordAddrBus] id_pc,
+    input wire                id_en,
+    input wire                id_br_flag,
+    input wire [`MemOpBus]    id_mem_op,
+    input wire [`WordDataBus] id_mem_wr_data,
+    input wire [`CtrlOpBus]   id_ctrl_op,
+    input wire [`RegAddrBus]  id_dst_addr,
+    input wire                id_gpr_we_,
+    input wire [`IsaExpBus]   id_exp_code,
+    /*EX/MEM Pipeline Registers*/
+    output reg [`WordAddrBus] ex_pc,
+    output reg                ex_en,
+    output reg                ex_br_flag,
+    output reg [`MemOpBus]    ex_mem_op,
+    output reg [`WordDataBus] ex_mem_wr_data,
+    output reg [`CtrlOpBus]   ex_ctrl_op,
+    output reg [`RegAddrBus]  ex_dst_addr,
+    output reg                ex_gpr_we_,
+    output reg [`IsaExpBus]   ex_exp_code,
+    output reg [`WordDataBus] ex_out
 );
     always @(posedge clk or `RESET_EDGE reset) begin
         if (reset == `RESET_ENABLE) begin
@@ -51,10 +51,9 @@ module ex_reg (
             ex_gpr_we_      <= #1 `DISABLE_;
             ex_exp_code     <= #1 `ISA_EXP_NO_EXP;
             ex_out          <= #1 `WORD_DATA_W'h0;
-            
         end else begin
             if (stall == `DISABLE) begin
-                if (flush == `ENABLE) begin                 // Flush
+                if (flush == `ENABLE) begin /*Flush*/
                     ex_pc           <= #1 `WORD_ADDR_W'h0;
                     ex_en           <= #1 `DISABLE;
                     ex_br_flag      <= #1 `DISABLE;
@@ -65,7 +64,7 @@ module ex_reg (
                     ex_gpr_we_      <= #1 `DISABLE_;
                     ex_exp_code     <= #1 `ISA_EXP_NO_EXP;
                     ex_out          <= #1 `WORD_DATA_W'h0;
-                end else if (int_detect == `ENABLE) begin   // Interrupt detection
+                end else if (int_detect == `ENABLE) begin /*Interrupt detection*/
                     ex_pc           <= #1 id_pc;
                     ex_en           <= #1 id_en;
                     ex_br_flag      <= #1 id_br_flag;
@@ -76,7 +75,7 @@ module ex_reg (
                     ex_gpr_we_      <= #1 `DISABLE_;
                     ex_exp_code     <= #1 `ISA_EXP_EXT_INT;
                     ex_out          <= #1 `WORD_DATA_W'h0;
-                end else if (alu_of == `ENABLE) begin       // Overflow
+                end else if (alu_of == `ENABLE) begin /*Overflow*/
                     ex_pc           <= #1 id_pc;
                     ex_en           <= #1 id_en;
                     ex_br_flag      <= #1 id_br_flag;
@@ -87,7 +86,7 @@ module ex_reg (
                     ex_gpr_we_      <= #1 `DISABLE_;
                     ex_exp_code     <= #1 `ISA_EXP_OVERFLOW;
                     ex_out          <= #1 `WORD_DATA_W'h0;
-                end else begin                              // Next data
+                end else begin /*Next data*/
                     ex_pc           <= #1 id_pc;
                     ex_en           <= #1 id_en;
                     ex_br_flag      <= #1 id_br_flag;

@@ -5,42 +5,43 @@
 `include "isa.h"
 
 module ex_stage (
-    // Clock & Reset
-    input wire                  clk,
-    input wire                  reset,
-    // Pipeline Control Signals
-    input wire                  stall,
-    input wire                  flush,
-    input wire                  int_detect,
-    // Forwarding
-    output wire [`WordDataBus]  fwd_data,
-    // ID/EX Pipeline Registers
-    input wire [`WordAddrBus]   id_pc,
-    input wire                  id_en,
-    input wire [`AluOpBus]      id_alu_op,
-    input wire [`WordDataBus]   id_alu_in_0,
-    input wire [`WordDataBus]   id_alu_in_1,
-    input wire                  id_br_flag,
-    input wire [`MemOpBus]      id_mem_op,
-    input wire [`WordDataBus]   id_mem_wr_data,
-    input wire [`CtrlOpBus]     id_ctrl_op,
-    input wire [`RegAddrBus]    id_dst_addr,
-    input wire                  id_gpr_we_,
-    input wire [`IsaExpBus]     id_exp_code,
-    // EX/MEM Pipeline Registers
-    output wire [`WordAddrBus]  ex_pc,
-    output wire                 ex_en,
-    output wire                 ex_br_flag,
-    output wire [`MemOpBus]     ex_mem_op,
-    output wire [`WordDataBus]  ex_mem_wr_data,
-    output wire [`CtrlOpBus]    ex_ctrl_op,
-    output wire [`RegAddrBus]   ex_dst_addr,
-    output wire                 ex_gpr_we_,
-    output wire [`IsaExpBus]    ex_exp_code,
-    output wire [`WordDataBus]  ex_out
+    /*Clock & Reset*/
+    input wire                 clk,
+    input wire                 reset,
+    /*Pipeline Control Signals*/
+    input wire                 stall,
+    input wire                 flush,
+    input wire                 int_detect,
+    /*Forwarding*/
+    output wire [`WordDataBus] fwd_data,
+    /*ID/EX Pipeline Registers*/
+    input wire [`WordAddrBus]  id_pc,
+    input wire                 id_en,
+    input wire [`AluOpBus]     id_alu_op,
+    input wire [`WordDataBus]  id_alu_in_0,
+    input wire [`WordDataBus]  id_alu_in_1,
+    input wire                 id_br_flag,
+    input wire [`MemOpBus]     id_mem_op,
+    input wire [`WordDataBus]  id_mem_wr_data,
+    input wire [`CtrlOpBus]    id_ctrl_op,
+    input wire [`RegAddrBus]   id_dst_addr,
+    input wire                 id_gpr_we_,
+    input wire [`IsaExpBus]    id_exp_code,
+    /*EX/MEM Pipeline Registers*/
+    output wire [`WordAddrBus] ex_pc,
+    output wire                ex_en,
+    output wire                ex_br_flag,
+    output wire [`MemOpBus]    ex_mem_op,
+    output wire [`WordDataBus] ex_mem_wr_data,
+    output wire [`CtrlOpBus]   ex_ctrl_op,
+    output wire [`RegAddrBus]  ex_dst_addr,
+    output wire                ex_gpr_we_,
+    output wire [`IsaExpBus]   ex_exp_code,
+    output wire [`WordDataBus] ex_out
 );
-    wire [`WordDataBus] out;
-    wire of;
+    wire [`WordDataBus]        out;
+    wire                       of;
+    
     assign fwd_data = out;
 
     alu alu (

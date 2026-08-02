@@ -5,57 +5,57 @@
 `include "isa.h"
 
 module id_stage (
-    // Clock & Reset
-    input wire                  clk,
-    input wire                  reset,
-    // Pipeline Control Signals
-    input wire                  stall,
-    input wire                  flush,
-    output wire                 br_taken,
-    output wire [`WordAddrBus]  br_addr,
-    output wire                 ld_hazard,
-    // IF/ID Pipeline Registers
-    input wire [`WordAddrBus]   if_pc,
-    input wire [`WordDataBus]   if_insn,
-    input wire                  if_en,
-    // GPR Interface
-    input wire [`WordDataBus]   gpr_rd_data_0,
-    input wire [`WordDataBus]   gpr_rd_data_1,
-    output wire [`RegAddrBus]   gpr_rd_addr_0,
-    output wire [`RegAddrBus]   gpr_rd_addr_1,
-    // Control Register Interface
-    input wire                  exe_mode,
-    input wire [`WordDataBus]   creg_rd_data,
-    output wire [`RegAddrBus]   creg_rd_addr,
-    // Data Forwarding from EX Stage
-    input wire                  ex_en,
-    input wire [`RegAddrBus]    ex_dst_addr,
-    input wire                  ex_gpr_we_,
-    input wire [`WordDataBus]   ex_fwd_data,
-    // Data Forwarding from MEM Stage
-    input wire [`WordDataBus]   mem_fwd_data,
-    // IF/ID Pipeline Registers
-    output wire [`WordAddrBus]  id_pc,
-    output wire                 id_en,
-    output wire [`AluOpBus]     id_alu_op,
-    output wire [`WordDataBus]  id_alu_in_0,
-    output wire [`WordDataBus]  id_alu_in_1,
-    output wire                 id_br_flag,
-    output wire [`MemOpBus]     id_mem_op,
-    output wire [`WordDataBus]  id_mem_wr_data,
-    output wire [`CtrlOpBus]    id_ctrl_op,
-    output wire [`RegAddrBus]   id_dst_addr,
-    output wire                 id_gpr_we_,
-    output wire [`IsaExpBus]    id_exp_code
+    /*Clock & Reset*/
+    input wire                 clk,
+    input wire                 reset,
+    /*Pipeline Control Signals*/
+    input wire                 stall,
+    input wire                 flush,
+    output wire                br_taken,
+    output wire [`WordAddrBus] br_addr,
+    output wire                ld_hazard,
+    /*IF/ID Pipeline Registers*/
+    input wire [`WordAddrBus]  if_pc,
+    input wire [`WordDataBus]  if_insn,
+    input wire                 if_en,
+    /*GPR Interface*/
+    input wire [`WordDataBus]  gpr_rd_data_0,
+    input wire [`WordDataBus]  gpr_rd_data_1,
+    output wire [`RegAddrBus]  gpr_rd_addr_0,
+    output wire [`RegAddrBus]  gpr_rd_addr_1,
+    /*Control Register Interface*/
+    input wire                 exe_mode,
+    input wire [`WordDataBus]  creg_rd_data,
+    output wire [`RegAddrBus]  creg_rd_addr,
+    /*Data Forwarding from EX Stage*/
+    input wire                 ex_en,
+    input wire [`RegAddrBus]   ex_dst_addr,
+    input wire                 ex_gpr_we_,
+    input wire [`WordDataBus]  ex_fwd_data,
+    /*Data Forwarding from MEM Stage*/
+    input wire [`WordDataBus]  mem_fwd_data,
+    /*IF/ID Pipeline Registers*/
+    output wire [`WordAddrBus] id_pc,
+    output wire                id_en,
+    output wire [`AluOpBus]    id_alu_op,
+    output wire [`WordDataBus] id_alu_in_0,
+    output wire [`WordDataBus] id_alu_in_1,
+    output wire                id_br_flag,
+    output wire [`MemOpBus]    id_mem_op,
+    output wire [`WordDataBus] id_mem_wr_data,
+    output wire [`CtrlOpBus]   id_ctrl_op,
+    output wire [`RegAddrBus]  id_dst_addr,
+    output wire                id_gpr_we_,
+    output wire [`IsaExpBus]   id_exp_code
 );
-    wire [`AluOpBus]    alu_op;
-    wire [`WordDataBus] alu_in_0;
-    wire [`WordDataBus] alu_in_1;
-    wire [`MemOpBus]    mem_op;
-    wire [`WordDataBus] mem_wr_data;
-    wire [`CtrlOpBus]   ctrl_op;
-    wire [`RegAddrBus]  dst_addr;
-    wire [`IsaExpBus]   exp_code;
+    wire [`AluOpBus]           alu_op;
+    wire [`WordDataBus]        alu_in_0;
+    wire [`WordDataBus]        alu_in_1;
+    wire [`MemOpBus]           mem_op;
+    wire [`WordDataBus]        mem_wr_data;
+    wire [`CtrlOpBus]          ctrl_op;
+    wire [`RegAddrBus]         dst_addr;
+    wire [`IsaExpBus]          exp_code;
 
     decoder decoder (
         .if_pc        (if_pc),

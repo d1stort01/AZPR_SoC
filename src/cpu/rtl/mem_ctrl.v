@@ -5,32 +5,35 @@
 `include "global_config.h"
 
 module mem_ctrl (
-    // EM/MEM Pipeline Registers
-    input wire                  ex_en,
-    input wire [`MemOpBus]      ex_mem_op,
-    input wire [`WordDataBus]   ex_mem_wr_data,
-    input wire [`WordDataBus]   ex_out,
-    // Memory Access Interface
-    input wire [`WordDataBus]   rd_data,
-    output wire [`WordAddrBus]  addr,
-    output reg                  as_,
-    output reg                  rw,
-    output wire [`WordDataBus]  wr_data,
-    // Memory Access Results
-    output reg [`WordDataBus]   out,
-    output reg                  miss_align
+    /*EM/MEM Pipeline Registers*/
+    input wire                 ex_en,
+    input wire [`MemOpBus]     ex_mem_op,
+    input wire [`WordDataBus]  ex_mem_wr_data,
+    input wire [`WordDataBus]  ex_out,
+    /*Memory Access Interface*/
+    input wire [`WordDataBus]  rd_data,
+    output wire [`WordAddrBus] addr,
+    output reg                 as_,
+    output reg                 rw,
+    output wire [`WordDataBus] wr_data,
+    /*Memory Access Results*/
+    output reg [`WordDataBus]  out,
+    output reg                 miss_align
 );
-    wire [`ByteOffsetBus] offset;
-    assign wr_data  = ex_mem_wr_data;
-    assign addr     = ex_out[`WordAddrLoc];
-    assign offset   = ex_out[`ByteOffsetLoc];
+    wire [`ByteOffsetBus]      offset;
 
-    // Memory Access Control
+    assign wr_data = ex_mem_wr_data;
+    assign addr    = ex_out[`WordAddrLoc];
+    assign offset  = ex_out[`ByteOffsetLoc];
+
+    /*
+    * Memory Access Control
+    */
     always @(*) begin
-        miss_align  = `DISABLE;
-        out         = `WORD_DATA_W'h0;
-        as_         = `DISABLE_;
-        rw          = `READ;
+        miss_align = `DISABLE;
+        out        = `WORD_DATA_W'h0;
+        as_        = `DISABLE_;
+        rw         = `READ;
         if (ex_en == `ENABLE) begin
             case (ex_mem_op)
                 `MEM_OP_LDW : begin

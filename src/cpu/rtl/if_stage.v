@@ -3,38 +3,38 @@
 `include "stddef.h"
 
 module if_stage (
-    // Clock & Reset
-    input wire                  clk,
-    input wire                  reset,
-    // Bus Busy Signal
-    output wire                 busy,
-    // Pipeline Control Signals
-    input wire                  stall,
-    input wire                  flush,
-    input wire [`WordAddrBus]   new_pc,
-    input wire                  br_taken,
-    input wire [`WordAddrBus]   br_addr,
-    // IF/ID Pipeline Registers
-    output wire [`WordAddrBus]  if_pc,
-    output wire [`WordDataBus]  if_insn,
-    output wire                 if_en,
-    // SPM Interface
-    input wire [`WordDataBus]   spm_rd_data,
-    output wire [`WordAddrBus]  spm_addr,
-    output wire                 spm_as_,
-    output wire                 spm_rw,
-    output wire [`WordDataBus]  spm_wr_data,
-    // Bus Interface
-    input wire [`WordDataBus]   bus_rd_data,
-    input wire                  bus_rdy_,
-    input wire                  bus_grnt_,
-    output wire                 bus_req_,
-    output wire [`WordAddrBus]  bus_addr,
-    output wire                 bus_as_,
-    output wire                 bus_rw,
-    output wire [`WordDataBus]  bus_wr_data
+    /*Clock & Reset*/
+    input wire                 clk,
+    input wire                 reset,
+    /*Bus Busy Signal*/
+    output wire                busy,
+    /*Pipeline Control Signals*/
+    input wire                 stall,
+    input wire                 flush,
+    input wire [`WordAddrBus]  new_pc,
+    input wire                 br_taken,
+    input wire [`WordAddrBus]  br_addr,
+    /*IF/ID Pipeline Registers*/
+    output wire [`WordAddrBus] if_pc,
+    output wire [`WordDataBus] if_insn,
+    output wire                if_en,
+    /*SPM Interface*/
+    input wire [`WordDataBus]  spm_rd_data,
+    output wire [`WordAddrBus] spm_addr,
+    output wire                spm_as_,
+    output wire                spm_rw,
+    output wire [`WordDataBus] spm_wr_data,
+    /*Bus Interface*/
+    input wire [`WordDataBus]  bus_rd_data,
+    input wire                 bus_rdy_,
+    input wire                 bus_grnt_,
+    output wire                bus_req_,
+    output wire [`WordAddrBus] bus_addr,
+    output wire                bus_as_,
+    output wire                bus_rw,
+    output wire [`WordDataBus] bus_wr_data
 );
-    wire [`WordDataBus] rd_data;
+    wire [`WordDataBus]        rd_data;
 
     bus_if bus_if (
         .clk        (clk),

@@ -5,10 +5,10 @@
 `include "global_config.h"
 
 module bus_arbiter (
-    // System Clock
+    /*System Clock*/
     input wire clk,
     input wire reset,
-    // Bus Master
+    /*Bus Master*/
     input wire m0_req_,
     output reg m0_grnt_,
     input wire m1_req_,
@@ -21,14 +21,16 @@ module bus_arbiter (
  
     reg [1:0] owner;
 
-    // Bus Grant Logic
+    /*
+    * Bus Grant Logic
+    */
     always @(*) begin
-        // Deassert all grant signal
+        /*Deassert all grant signal*/
         m0_grnt_ = `DISABLE;
         m1_grnt_ = `DISABLE;
         m2_grnt_ = `DISABLE;
         m3_grnt_ = `DISABLE;
-        // Assert grant signal base on current owner
+        /*Assert grant signal base on current owner*/
         case (owner)
             `BUS_OWNER_MASTER_0: begin
                 m0_grnt_ = `ENABLE_;
@@ -45,13 +47,15 @@ module bus_arbiter (
         endcase
     end
 
-    // Bus Arbitration Logic
+    /*
+    * Bus Arbitration Logic
+    */
     always @(posedge clk or `RESET_EDGE reset) begin
         if (reset == `RESET_ENABLE) begin
-            // Asynchronous reset
+            /*Asynchronous reset*/
             owner <= #1 `BUS_OWNER_MASTER_0;
         end else begin
-            // Round robin
+            /*Round robin*/
             case (owner)
                 `BUS_OWNER_MASTER_0: begin
                     if (m0_req_ == `ENABLE_) begin
