@@ -43,9 +43,7 @@ module ctrl (
     output wire                  mem_flush,
     output reg [`WordAddrBus]    new_pc
 );
-    /*
-    * Control Registers
-    */
+    /*Control Registers*/
     reg                   int_en;
     reg                   pre_exe_mode;
     reg                   pre_int_en;
@@ -57,19 +55,13 @@ module ctrl (
 
     reg [`WordAddrBus]    pre_pc;
     reg                   br_flag;
-
-    /*
-    * Stall Signals
-    */
+    /*Stall Signals*/
     wire stall       = if_busy | mem_busy;
     assign if_stall  = stall;
     assign id_stall  = stall;
     assign ex_stall  = stall;
     assign mem_stall = stall;
-
-    /*
-    * Flush Signals
-    */
+    /*Flush Signals*/
     reg flush;
     assign if_flush  = flush;
     assign id_flush  = flush | ld_hazard;
@@ -95,5 +87,20 @@ module ctrl (
             end
         end
     end
+
+    /*
+    * Interrupt Detection
+    */
+    always @(*) begin
+        if ((int_en == `ENABLE) && ((|((~mask) & irq)) == `ENABLE)) begin
+            int_detect = `ENABLE;
+        end else begin
+            int_detect = `DISABLE;
+        end
+    end
+
+    /*
+    * Read Access
+    */
     
 endmodule
